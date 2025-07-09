@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, Image, StyleSheet, ActivityIndicator, TouchableOpacity, Button } from 'react-native';
 import api from '../services/api';
 import { useRoute } from '@react-navigation/native';
+import { colors } from '../styles/Theme';
 
 export default function VideoListScreen({ navigation }) {
   const [videos, setVideos] = useState([]);
@@ -50,16 +51,17 @@ export default function VideoListScreen({ navigation }) {
   }
 
   return (
-    <View>
-        <FlatList
-    
+    <View style={{backgroundColor: colors.fundo, height: '100%', justifyContent: 'center', paddingBottom: 60}}> 
+    <FlatList
       data={videos}
       keyExtractor={(item) => item.id.toString()}
       renderItem={renderItem}
       contentContainerStyle={styles.container}
-
     />
-   <Button title="Enviar vídeo" onPress={() => navigation.navigate('Upload', { usuario })} />
+
+    <TouchableOpacity style={styles.botao} onPress={() => navigation.navigate('Upload', { usuario })}>
+            <Text style={styles.botaoTexto}>Enviar vídeo</Text>
+    </TouchableOpacity>
 
     </View>
     
@@ -71,6 +73,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 16,
     paddingTop: 100,
+    backgroundColor: colors.fundo,
+    borderColor: '#ffff'
   },
   loadingContainer: {
     flex: 1,
@@ -79,11 +83,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    backgroundColor: '#f2f2f2',
+    backgroundColor: colors.fundo ,
     borderRadius: 10,
     padding: 16,
     marginBottom: 16,
     elevation: 2,
+    
   },
   header: {
     flexDirection: 'row',
@@ -96,15 +101,29 @@ const styles = StyleSheet.create({
   autor: {
     fontWeight: 'bold',
     fontSize: 16,
+    color: colors.texto
   },
   titulo: {
     fontSize: 18,
     fontWeight: 'bold',
     marginTop: 5,
+    color: colors.texto
   },
   descricao: {
     marginTop: 4,
     fontSize: 14,
     color: '#555',
+    color: colors.texto
+  },
+  botao: {
+    backgroundColor: colors.botao,
+    padding: 12,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  botaoTexto: {
+    color: colors.botaoTexto,
+    fontWeight: 'bold',
   },
 });

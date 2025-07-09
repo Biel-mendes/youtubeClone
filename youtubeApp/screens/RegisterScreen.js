@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, Button, Alert, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import api from '../services/api';
+import { colors } from '../styles/Theme';
 
 export default function RegisterScreen({ navigation }) {
   const [nome, setNome] = useState('');
@@ -72,35 +73,65 @@ export default function RegisterScreen({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.title}>Cadastro</Text>
 
-      <TextInput placeholder="Nome" style={styles.input} onChangeText={setNome} value={nome} />
-      <TextInput placeholder="Email" style={styles.input} onChangeText={setEmail} value={email} />
-      <TextInput placeholder="Senha" secureTextEntry style={styles.input} onChangeText={setSenha} value={senha} />
+      <TextInput style={styles.input} placeholder="Email" placeholderTextColor={colors.placeholder} value={email} onChangeText={setEmail} />
+      <TextInput style={styles.input} placeholder="Nome" placeholderTextColor={colors.placeholder} value={nome} onChangeText={setNome} />
+      <TextInput style={styles.input} placeholder="Senha" placeholderTextColor={colors.placeholder} secureTextEntry value={senha} onChangeText={setSenha} />
+
 
       <TextInput
         placeholder="CEP"
+        placeholderTextColor={colors.placeholder}
         style={styles.input}
         onChangeText={setCep}
         value={cep}
         onBlur={buscarCep}
       />
 
-      <TextInput placeholder="Endereço" style={styles.input} onChangeText={setEndereco} value={endereco} />
-      <TextInput placeholder="Complemento" style={styles.input} onChangeText={setComplemento} value={complemento} />
-      <TextInput placeholder="Número" style={styles.input} onChangeText={setNumero} value={numero} />
-      <TextInput placeholder="Cidade" style={styles.input} onChangeText={setCidade} value={cidade} />
-      <TextInput placeholder="UF" style={styles.input} onChangeText={setUf} value={uf} />
+      <TextInput placeholder="Endereço" style={styles.input} placeholderTextColor={colors.placeholder} onChangeText={setEndereco} value={endereco} />
+      <TextInput placeholder="Complemento" style={styles.input} placeholderTextColor={colors.placeholder} onChangeText={setComplemento} value={complemento} />
+      <TextInput placeholder="Número" style={styles.input} placeholderTextColor={colors.placeholder} onChangeText={setNumero} value={numero} />
+      <TextInput placeholder="Cidade" style={styles.input} placeholderTextColor={colors.placeholder} onChangeText={setCidade} value={cidade} />
+      <TextInput placeholder="UF" style={styles.input} placeholderTextColor={colors.placeholder} onChangeText={setUf} value={uf} />
 
-      <Button title="Escolher avatar" onPress={escolherAvatar} />
+      <TouchableOpacity style={styles.botao} onPress={escolherAvatar}>
+        <Text style={styles.botaoTexto}>Escolher avatar</Text>
+      </TouchableOpacity>
       {avatarUrl && <Image source={{ uri: avatarUrl }} style={styles.avatar} />}
 
-      <Button title="Cadastrar" onPress={cadastrar} color="#28a745" />
+      <TouchableOpacity style={styles.botao} onPress={cadastrar}>
+        <Text style={styles.botaoTexto}>Entrar</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20 },
-  title: { fontSize: 24, marginBottom: 16, textAlign: 'center' },
-  input: { borderWidth: 1, borderColor: '#ccc', padding: 10, marginBottom: 10, borderRadius: 5 },
-  avatar: { width: 80, height: 80, borderRadius: 40, alignSelf: 'center', marginTop: 10 },
+  container: { padding: 20, backgroundColor: colors.fundo, height: '100%' },
+  title: { fontSize: 28, textAlign: 'center', color: colors.texto, marginBottom: 20 },
+  input: {
+    borderWidth: 1,
+    borderColor: colors.inputBorder,
+    borderRadius: 5,
+    padding: 10,
+    color: colors.texto,
+    marginBottom: 10,
+  },
+  botao: {
+    backgroundColor: colors.botao,
+    padding: 12,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  botaoTexto: {
+    color: colors.botaoTexto,
+    fontWeight: 'bold',
+  },
+  avatar: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    alignSelf: 'center',
+    marginTop: 10,
+  },
 });

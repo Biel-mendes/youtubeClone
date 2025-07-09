@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import api from '../services/api';
+import { colors } from '../styles/Theme';
 
 export default function VideoUploadScreen() {
   const route = useRoute();
   const navigation = useNavigation();
 
-  // ⬇️ Aqui é onde o usuário é definido — SEM usar diretamente no escopo do componente
+
   const usuario = route.params && route.params.usuario ? route.params.usuario : null;
 
   const [titulo, setTitulo] = useState('');
@@ -65,18 +66,34 @@ export default function VideoUploadScreen() {
       <Text style={styles.label}>Descrição</Text>
       <TextInput style={styles.input} value={descricao} onChangeText={setDescricao} />
 
-      <Button title="Escolher vídeo" onPress={escolherVideo} />
+      <TouchableOpacity style={styles.botao} onPress={escolherVideo}>
+              <Text style={styles.botaoTexto}>Escolher vídeo</Text>
+        </TouchableOpacity>
+
       {videoUrl && <Text style={styles.preview}>🎥 Vídeo selecionado</Text>}
 
-      <Button title="Enviar vídeo" onPress={enviarVideo} color="#28a745" />
+      <TouchableOpacity style={styles.botao} onPress={enviarVideo}>
+              <Text style={styles.botaoTexto}>Enviar vídeo</Text>
+        </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, justifyContent: 'center' },
-  label: { marginTop: 10, fontWeight: 'bold' },
-  input: { borderWidth: 1, borderColor: '#ccc', padding: 10, borderRadius: 5 },
+  container: { flex: 1, padding: 20, justifyContent: 'center', backgroundColor: colors.fundo },
+  label: { marginTop: 10, fontWeight: 'bold', color: '#fff', marginBottom: 10 },
+  input: { borderWidth: 1, borderColor: '#ccc', padding: 10, borderRadius: 5, marginBottom:10, color: colors.texto, },
   preview: { marginVertical: 10, color: 'green', fontWeight: 'bold' },
   erro: { color: 'red', fontSize: 16, marginBottom: 20, textAlign: 'center' },
+  botao: {
+    backgroundColor: colors.botao,
+    padding: 12,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  botaoTexto: {
+    color: colors.botaoTexto,
+    fontWeight: 'bold',
+  },
 });
